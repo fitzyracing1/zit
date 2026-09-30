@@ -1,0 +1,61 @@
+# Time Keeper
+
+> A small keeper that counts machine ticks and stores each count as a binary number with bit 1 then bit 0 on the back.
+
+## Purpose
+Give the inner-sandbox computer a keeper of ticks. Each tick is one step of the machine clock. The keeper writes the count into a register using the same encoding as every other word.
+
+## How it works (plain English)
+The clock starts at zero.
+The program takes five ticks.
+After each tick the current count sits in r1, already marked with 1 then 0.
+When the five ticks are done the keeper copies that count into r2 so it is held, then prints both the live tick and the kept snapshot.
+Then it stops.
+
+## Key ideas
+- Tick (the clock moves forward by one)
+- Keep (hold the current clock without moving it)
+- Mark (bit 1 then bit 0 on the back of every number)
+- Barrage (this page is for people; only the actual code runs)
+
+## The actual code
+```
+TICK r1
+TICK r1
+TICK r1
+TICK r1
+TICK r1
+KEEP r2
+PRINT r1
+PRINT r2
+HALT
+```
+
+## Line-by-line translation
+1. `TICK r1` → “Move the clock forward by one and put that count in r1.”
+2. `TICK r1` → “Tick again. r1 now holds two.”
+3. `TICK r1` → “Tick again. r1 now holds three.”
+4. `TICK r1` → “Tick again. r1 now holds four.”
+5. `TICK r1` → “Tick again. r1 now holds five.”
+6. `KEEP r2` → “Copy the clock as it stands into r2. Do not move the clock.”
+7. `PRINT r1` → “Show the live tick word.”
+8. `PRINT r2` → “Show the kept snapshot word.”
+9. `HALT` → “Stop the machine.”
+
+## Decisions the program makes
+- Every TICK raises the clock by one and writes the new count, marked 1 then 0.
+- KEEP never raises the clock. It only holds what is already there.
+- PRINT never changes a register.
+- HALT ends the run.
+
+## What a person would notice
+After the run, both r1 and r2 hold the same marked word for five: `10110`.
+The clock on the machine also stands at five.
+
+## Current status
+Runnable on the inner-sandbox computer.
+
+## Next possible steps
+- Tick a register-chosen number of times instead of five fixed ticks
+- Keep a list of snapshots, not only one
+- Print the mark bits separately from the count

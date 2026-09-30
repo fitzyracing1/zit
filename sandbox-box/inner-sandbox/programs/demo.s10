@@ -1,0 +1,19 @@
+# inner-sandbox program
+# words may be written encoded (…10) or as decimal; the machine stores encoded
+
+LOAD r0 10110      # 5, already marked 1 then 0
+LOAD r1 3          # 3, machine will mark it
+ADD  r2 r0 r1      # 5 + 3 -> 8 encoded as 100010
+PRINT r2
+
+LOAD r3 11110      # 7
+LOAD r4 1010       # 2
+SUB  r5 r3 r4      # 7 - 2 -> 5 encoded as 10110
+PRINT r5
+
+LOAD r6 6
+LOAD r7 2
+MUL  r0 r6 r7      # 6 * 2 -> 12 encoded as 110010
+PRINT r0
+
+HALT
